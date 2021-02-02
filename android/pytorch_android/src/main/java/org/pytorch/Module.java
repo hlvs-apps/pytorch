@@ -60,7 +60,7 @@ public class Module {
    * @return new {@link org.pytorch.Module} object which owns torch::jit::Module.
    */
   public static Module load(final String assetName,final AssetManager assetManager){
-    return new load(assetName,assetManager,Device.CPU);
+    return load(assetName,assetManager,Device.CPU);
   }
 
   Module(INativePeer nativePeer) {
