@@ -2,6 +2,7 @@
 
 package org.pytorch;
 
+import android.content.res.AssetManager;
 import com.facebook.soloader.nativeloader.NativeLoader;
 import com.facebook.soloader.nativeloader.SystemDelegate;
 
@@ -33,6 +34,34 @@ public class Module {
    */
   public static Module load(final String modelPath) {
     return load(modelPath, Device.CPU);
+  }
+
+  /**
+   * Loads a serialized TorchScript module from the specified asset to run on specified
+   * device.
+   *
+   * @param assetName name of the asset file that contains the serialized TorchScript module.
+   * @param assetManager {@link android.content.res.AssetManager} to use for loading specified asset
+   * @param device {@link org.pytorch.Device} to use for running specified module.
+   * @return new {@link org.pytorch.Module} object which owns torch::jit::Module.
+   */
+
+  public static Module load(final String assetName,final AssetManager assetManager, final Device device){
+    if (!NativeLoader.isInitialized()) {
+      NativeLoader.init(new SystemDelegate());
+    }
+    return new Module(new NativePeer(assetName,assetManager,device);
+  }
+
+  /**
+   * Loads a serialized TorchScript module from the specified asset to run on CPU.
+   *
+   * @param assetName name of the asset file that contains the serialized TorchScript module.
+   * @param assetManager {@link android.content.res.AssetManager} to use for loading specified asset
+   * @return new {@link org.pytorch.Module} object which owns torch::jit::Module.
+   */
+  public static Module load(final String assetName,final AssetManager assetManager){
+    return new load(assetName,assetManager,Device.CPU);
   }
 
   Module(INativePeer nativePeer) {
