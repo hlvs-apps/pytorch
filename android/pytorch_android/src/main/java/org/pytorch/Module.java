@@ -45,7 +45,6 @@ public class Module {
    * @param device {@link org.pytorch.Device} to use for running specified module.
    * @return new {@link org.pytorch.Module} object which owns torch::jit::Module.
    */
-
   public static Module load(final String assetName,final AssetManager assetManager, final Device device){
     if (!NativeLoader.isInitialized()) {
       NativeLoader.init(new SystemDelegate());
